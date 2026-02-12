@@ -1,0 +1,39 @@
+[0.008s] Invoking command in '/home/ibrahim/ros2_ws/src/Demcon/Demcon/build/Demcon': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/ibrahim/ros2_ws/src/Demcon/Demcon -DCMAKE_INSTALL_PREFIX=/home/ibrahim/ros2_ws/src/Demcon/Demcon/install/Demcon
+[0.250s] -- The C compiler identification is GNU 13.3.0
+[0.434s] -- The CXX compiler identification is GNU 13.3.0
+[0.452s] -- Detecting C compiler ABI info
+[0.547s] -- Detecting C compiler ABI info - done
+[0.556s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.556s] -- Detecting C compile features
+[0.557s] -- Detecting C compile features - done
+[0.566s] -- Detecting CXX compiler ABI info
+[0.665s] -- Detecting CXX compiler ABI info - done
+[0.675s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.675s] -- Detecting CXX compile features
+[0.675s] -- Detecting CXX compile features - done
+[0.682s] -- Found ament_cmake: 2.5.4 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[0.835s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+[1.029s] -- Found rclpy: 7.1.6 (/opt/ros/jazzy/share/rclpy/cmake)
+[1.033s] -- Found rclcpp: 28.1.13 (/opt/ros/jazzy/share/rclcpp/cmake)
+[1.099s] -- Found rosidl_generator_c: 4.6.6 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+[1.120s] -- Found rosidl_generator_cpp: 4.6.6 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+[1.145s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[1.172s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[1.281s] -- Found rmw_implementation_cmake: 7.3.2 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)
+[1.287s] -- Found rmw_fastrtps_cpp: 8.4.3 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)
+[1.394s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.13")  
+[1.416s] -- Found FastRTPS: /opt/ros/jazzy/include (Required is at least version "2.13") 
+[1.439s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[1.622s] WARNING: Package name "Demcon" does not follow the naming conventions. It should start with a lower case letter and only contain lower case letters, digits, underscores, and dashes.
+[1.634s] [31mCMake Error at /opt/ros/jazzy/share/ament_cmake_core/cmake/core/ament_package_xml.cmake:53 (message):
+[1.634s]   ament_package_xml() package name 'Demcon' in '/package.xml' does not match
+[1.634s]   current PROJECT_NAME 'fuse'.  You must call project() with the same package
+[1.634s]   name before.
+[1.634s] Call Stack (most recent call first):
+[1.634s]   /opt/ros/jazzy/share/ament_cmake_python/cmake/ament_python_install_package.cmake:60 (ament_package_xml)
+[1.634s]   /opt/ros/jazzy/share/ament_cmake_python/cmake/ament_python_install_package.cmake:39 (_ament_cmake_python_install_package)
+[1.635s]   CMakeLists.txt:26 (ament_python_install_package)
+[1.635s] 
+[1.635s] [0m
+[1.635s] -- Configuring incomplete, errors occurred!
+[1.643s] Invoked command in '/home/ibrahim/ros2_ws/src/Demcon/Demcon/build/Demcon' returned '1': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/ibrahim/ros2_ws/src/Demcon/Demcon -DCMAKE_INSTALL_PREFIX=/home/ibrahim/ros2_ws/src/Demcon/Demcon/install/Demcon
