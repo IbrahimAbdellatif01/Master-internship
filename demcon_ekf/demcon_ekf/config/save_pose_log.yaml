@@ -1,0 +1,5 @@
+pose_log:
+  ros__parameters:
+    odom_gps: "/odometry/gps"
+    odom_local: "/odometry/local"
+    odom_global: "/odometry/global"

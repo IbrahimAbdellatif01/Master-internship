@@ -1,0 +1,52 @@
+fuse_optimizer_tier1:
+  ros__parameters:
+    use_sim_time: true
+    optimization_frequency: 20.0 #30
+    transaction_timeout: 0.01 #0.2
+    lag_duration: 2.0
+    sensor_timeout: 0.1
+    two_d_mode: true
+
+    motion_models:
+      unicycle_motion_model:
+        type: fuse_models::Unicycle2D
+
+    unicycle_motion_model:
+      #                         x      y      yaw    vx     vy     vyaw   ax   ay
+      process_noise_diagonal: [0.100, 0.100, 0.100, 0.100, 0.100, 0.100, 0.1, 0.1]
+
+    sensor_models:
+      initial_localization_sensor:
+        type: fuse_models::Unicycle2DIgnition
+        motion_models: [unicycle_motion_model]
+        ignition: true
+      odometry_sensor:
+        type: fuse_models::Odometry2D
+        motion_models: [unicycle_motion_model]
+    
+
+    initial_localization_sensor:
+      publish_on_startup: true
+      #                  x      y      yaw    vx     vy     vyaw   ax     ay
+      initial_state: [  0.000, 0.000, 2.452, 0.000, 0.000, 0.000, 0.000, 0.000]
+      initial_sigma: [  0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01]
+
+    odometry_sensor:
+      topic: '/wheel_odom'
+      twist_target_frame: 'base_link'
+      linear_velocity_dimensions: ['x', 'y']
+      angular_velocity_dimensions: ['yaw']
+
+    publishers:
+      filtered_publisher:
+        type: fuse_models::Odometry2DPublisher
+
+    filtered_publisher:
+      topic: 'odometry/fuse_tier1'
+      base_link_frame_id: 'base_link'
+      base_link_output_frame_id: 'base_link'
+      odom_frame_id: 'odom'
+      map_frame_id: 'map'
+      world_frame_id: 'odom'  
+      publish_frequency: 10.0 #30.0
+      publish_tf: true

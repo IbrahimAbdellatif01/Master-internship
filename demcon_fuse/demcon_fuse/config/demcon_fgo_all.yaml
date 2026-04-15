@@ -1,0 +1,129 @@
+fuse_optimizer_tier1:
+  ros__parameters:
+    # Fixed-lag smoother configuration
+    optimization_frequency: 20.0
+    transaction_timeout: 0.01
+    lag_duration: 2.0
+
+    motion_models:
+      unicycle_motion_model:
+        type: fuse_models::Unicycle2D
+
+    unicycle_motion_model:
+      #                         x      y      yaw    vx     vy     vyaw   ax   ay
+      process_noise_diagonal: [0.100, 0.100, 0.100, 0.100, 0.100, 0.100, 0.1, 0.1]
+
+    sensor_models:
+      initial_localization_sensor:
+        type: fuse_models::Unicycle2DIgnition
+        motion_models: [unicycle_motion_model]
+        ignition: true
+      odometry_sensor:
+        type: fuse_models::Odometry2D
+        motion_models: [unicycle_motion_model]
+        
+      imu_sensor:
+        type: fuse_models::Imu2D
+        motion_models: [unicycle_motion_model]
+
+    initial_localization_sensor:
+      publish_on_startup: true
+      #                x      y      yaw    vx     vy     vyaw    ax     ay
+      initial_state: [0.000, 0.000, 2.452, 0.000, 0.000, 0.000, 0.000, 0.000]
+      initial_sigma: [0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01]
+
+    odometry_sensor:
+      topic: 'diff_drive_base_controller/odom'
+      twist_target_frame: 'base_link'
+      linear_velocity_dimensions: ['x', 'y']
+      angular_velocity_dimensions: ['yaw']
+
+
+    imu_sensor:
+      topic: 'imu/filtered'
+      # twist_target_frame: 'base_link'
+      # angular_velocity_dimensions: ['yaw']
+      orientation_target_frame: 'base_link'
+      orientation_dimensions: ['yaw']
+      # differential: true
+      # independent: false
+
+    publishers:
+      filtered_publisher:
+        type: fuse_models::Odometry2DPublisher
+
+    filtered_publisher:
+      topic: 'odometry/fuse_tier1'
+      base_link_frame_id: 'base_link'
+      odom_frame_id: 'odom'
+      map_frame_id: 'world'
+      world_frame_id: 'odom'
+      publish_tf: true
+      publish_frequency: 10.0
+fuse_optimizer_tier2:
+  ros__parameters:
+    # Fixed-lag smoother configuration
+    optimization_frequency: 20.0
+    transaction_timeout: 0.01
+    lag_duration: 1.5
+
+    motion_models:
+      unicycle_motion_model:
+        type: fuse_models::Unicycle2D
+
+    unicycle_motion_model:
+      #                         x      y      yaw    vx     vy     vyaw   ax   ay
+      process_noise_diagonal: [0.100, 0.100, 0.100, 0.100, 0.100, 0.100, 0.1, 0.1]
+
+    sensor_models:
+      initial_localization_sensor:
+        type: fuse_models::Unicycle2DIgnition
+        motion_models: [unicycle_motion_model]
+        ignition: true
+      odometry_sensor:
+        type: fuse_models::Odometry2D
+        motion_models: [unicycle_motion_model]
+        
+      imu_sensor:
+        type: fuse_models::Imu2D
+        motion_models: [unicycle_motion_model]
+
+    initial_localization_sensor:
+      publish_on_startup: true
+      #                x      y      yaw    vx     vy     vyaw    ax     ay
+      initial_state: [0.000, 0.000, 2.452, 0.000, 0.000, 0.000, 0.000, 0.000]
+      initial_sigma: [0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01]
+
+    odometry_sensor:
+      topic: 'diff_drive_base_controller/odom'
+      twist_target_frame: 'base_link'
+      linear_velocity_dimensions: ['x', 'y']
+      angular_velocity_dimensions: ['yaw']
+
+    odometry_sensor:
+      topic: /odometry/gps
+      # pose_target_frame: 'map'
+      # position dimensions from GPS odometry
+      position_dimensions: ['x','y']
+
+    imu_sensor:
+      topic: 'imu/filtered'
+      # twist_target_frame: 'base_link'
+      # angular_velocity_dimensions: ['yaw']
+      orientation_target_frame: 'base_link'
+      orientation_dimensions: ['yaw']
+      # differential: true
+      # independent: false
+
+    publishers:
+      filtered_publisher:
+        type: fuse_models::Odometry2DPublisher
+
+    filtered_publisher:
+      topic: 'odometry/fuse_tier2'
+      base_link_frame_id: 'base_link'
+      odom_frame_id: 'odom'
+      map_frame_id: 'map'
+      world_frame_id: 'map'
+      publish_tf: true
+      publish_frequency: 10.0

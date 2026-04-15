@@ -1,0 +1,141 @@
+fuse_optimizer_tier1:
+  ros__parameters:
+    use_sim_time: true
+    optimization_frequency: 10.0
+    transaction_timeout: 0.1
+    lag_duration: 0.3
+    sensor_timeout: 0.1
+    two_d_mode: true
+
+    motion_models:
+      unicycle_motion_model:
+        type: fuse_models::Unicycle2D
+
+    unicycle_motion_model:
+      #                         x      y      yaw    vx     vy     vyaw   ax   ay
+      process_noise_diagonal: [0.100, 0.100, 0.100, 0.100, 0.100, 0.100, 0.1, 0.1]
+
+    sensor_models:
+      initial_localization_sensor:
+        type: fuse_models::Unicycle2DIgnition
+        motion_models: [unicycle_motion_model]
+        ignition: true
+      odometry_sensor:
+        type: fuse_models::Odometry2D
+        motion_models: [unicycle_motion_model]
+      # imu_sensor:
+      #   type: fuse_models::Imu2D
+      #   motion_models: [unicycle_motion_model]
+
+    initial_localization_sensor:
+      publish_on_startup: true
+      #                  x      y      yaw    vx     vy     vyaw   ax     ay
+      initial_state: [  11.738, 48.25, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+      #initial_state: [  0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+      initial_sigma: [  0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01]
+
+    odometry_sensor:
+      topic: '/wheel_odom_fixed'
+      twist_target_frame: 'base_link'
+      linear_velocity_dimensions: ['x', 'y']
+      angular_velocity_dimensions: ['yaw']
+      throttle_period: 0.01
+      # independent: false
+    # imu_sensor:
+    #   topic: '/imu0/imu'
+    #   pose_target_frame: 'base_link'
+    #   orientation_dimensions: ['yaw']
+    #   differential: true
+    #   independent: false
+    #   throttle_period: 0.02
+    # #   #orientation_diagonal [0.1]
+      
+    publishers:
+      filtered_publisher:
+        type: fuse_models::Odometry2DPublisher
+
+    filtered_publisher:
+      topic: 'odometry/fuse_tier1'
+      base_link_frame_id: 'base_link'
+      base_link_output_frame_id: 'base_link'
+      odom_frame_id: 'odom'
+      map_frame_id: 'map'
+      world_frame_id: 'odom'  
+      publish_frequency: 10.0
+      publish_tf: true
+      
+fuse_optimizer_tier2:
+  ros__parameters:
+    use_sim_time: true
+    optimization_frequency: 5.0
+    transaction_timeout: 0.1
+    lag_duration: 0.3
+    sensor_timeout: 0.1
+    two_d_mode: true
+
+    motion_models:
+      unicycle_motion_model:
+        type: fuse_models::Unicycle2D
+
+    unicycle_motion_model:
+      #                         x      y      yaw    vx     vy     vyaw   ax   ay
+      process_noise_diagonal: [0.100, 0.100, 0.100, 0.100, 0.100, 0.100, 0.1, 0.1]
+
+    sensor_models:
+      initial_localization_sensor:
+        type: fuse_models::Unicycle2DIgnition
+        motion_models: [unicycle_motion_model]
+        ignition: true
+      odometry_sensor:
+        type: fuse_models::Odometry2D
+        motion_models: [unicycle_motion_model]
+      imu_sensor:
+        type: fuse_models::Imu2D
+        motion_models: [unicycle_motion_model]
+      gps_sensor:
+        type: fuse_models::Pose2D # changed from Pose2D for testing
+        motion_models: [unicycle_motion_model]
+
+    initial_localization_sensor:
+      publish_on_startup: true
+      #                  x      y      yaw    vx     vy     vyaw   ax     ay
+      initial_state: [  11.738, 48.25, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+      #initial_state: [  0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+      initial_sigma: [  0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01]
+
+    odometry_sensor:
+      topic: '/wheel_odom_fixed'
+      twist_target_frame: 'base_link'
+      linear_velocity_dimensions: ['x', 'y']
+      angular_velocity_dimensions: ['yaw']
+      throttle_period: 0.3
+      independent: false
+
+    imu_sensor:
+      topic: '/imu0/imu'
+      pose_target_frame: 'base_link'
+      orientation_dimensions: ['yaw']
+      differential: true
+      independent: false
+      throttle_period: 0.3
+    # #   #orientation_diagonal [0.1]
+
+    gps_sensor:
+      topic: '/navant0/rfid_republished'  # Your GPS topic
+      pose_target_frame: 'map'     #twist vs pose for target_frame
+      position_dimensions: ['x', 'y']
+      independent: true
+
+    publishers:
+      filtered_publisher:
+        type: fuse_models::Odometry2DPublisher
+
+    filtered_publisher:
+      topic: 'odometry/fuse_tier2'
+      base_link_frame_id: 'base_link'
+      base_link_output_frame_id: 'base_link'
+      odom_frame_id: 'odom'
+      map_frame_id: 'map'
+      world_frame_id: 'map'
+      publish_frequency: 5.0
+      publish_tf: true

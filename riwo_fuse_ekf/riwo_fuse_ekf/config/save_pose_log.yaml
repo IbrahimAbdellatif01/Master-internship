@@ -1,0 +1,5 @@
+pose_log:
+  ros__parameters:
+    odom_gps: "/odometry/gps"
+    odom_local: "/odometry/fuse_tier1"
+    odom_global: "/odometry/fuse_tier2"
